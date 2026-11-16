@@ -1,12 +1,10 @@
 {
   "name": "@whatsaaaa/format-config",
   "version": "1.0.0",
-  "description": "Shared formatter options for whatsaaaa projects, for oxfmt and Prettier",
+  "description": "Shared oxfmt options for whatsaaaa projects",
   "keywords": [
     "format",
-    "oxfmt",
-    "prettier",
-    "prettier-config"
+    "oxfmt"
   ],
   "homepage": "https://github.com/whatsaaaa/config/tree/main/packages/format-config#readme",
   "bugs": "https://github.com/whatsaaaa/config/issues",
@@ -27,10 +25,6 @@
       "types": "./dist/oxfmt.d.ts",
       "default": "./dist/oxfmt.js"
     },
-    "./prettier": {
-      "types": "./dist/prettier.d.ts",
-      "default": "./dist/prettier.js"
-    },
     "./package.json": "./package.json"
   },
   "publishConfig": {
@@ -45,25 +39,10 @@
     "@types/node": "^22.20.5",
     "@whatsaaaa/tsconfig": "workspace:*",
     "oxfmt": "^0.78.0",
-    "prettier": "^3.9.10",
-    "prettier-plugin-astro": "^1.1.2",
     "typescript": "~6.0.3"
   },
   "peerDependencies": {
-    "oxfmt": ">=0.38.0",
-    "prettier": "^3.0.0",
-    "prettier-plugin-astro": "^1.0.0"
-  },
-  "peerDependenciesMeta": {
-    "oxfmt": {
-      "optional": true
-    },
-    "prettier": {
-      "optional": true
-    },
-    "prettier-plugin-astro": {
-      "optional": true
-    }
+    "oxfmt": ">=0.73.0"
   },
   "engines": {
     "node": "^22.18.0 || >=24.12.0"

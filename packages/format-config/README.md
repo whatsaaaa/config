@@ -2,7 +2,7 @@
 
 # @whatsaaaa/format-config
 
-The formatter options of whatsaaaa projects, for [oxfmt](https://oxc.rs/docs/guide/usage/formatter) and for [Prettier](https://prettier.io): no semicolons, single quotes, lines of 100. One source for both, so they format a file the same way.
+The formatter options of whatsaaaa projects, for [oxfmt](https://oxc.rs/docs/guide/usage/formatter): no semicolons and single quotes, with oxfmt's defaults otherwise, such as lines of 100.
 
 ```sh
 pnpm add -D @whatsaaaa/format-config oxfmt
@@ -18,15 +18,11 @@ import whatsaaaa from '@whatsaaaa/format-config/oxfmt'
 export default defineConfig({ ...whatsaaaa, ignorePatterns: ['pnpm-lock.yaml'] })
 ```
 
-Prettier is for what oxfmt does not format, such as Astro files. A project names the config in its `.prettierrc.json`:
+oxfmt formats Astro files too, from version 0.73. A project with Astro files adds `astro: true` and installs `@astrojs/compiler-rs`, which oxfmt needs for them:
 
-```json
-"@whatsaaaa/format-config/prettier"
+```ts
+export default defineConfig({ ...whatsaaaa, astro: true })
 ```
-
-When the project has [`prettier-plugin-astro`](https://github.com/withastro/prettier-plugin-astro) installed, the config takes the plugin and formats `.astro` files with it.
-
-The width of 100 is oxfmt's default, written out because Prettier's is 80.
 
 ## License
 

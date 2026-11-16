@@ -16,8 +16,8 @@ export interface Options {
   /** Paths ESLint skips, on top of the default ones. */
   ignores?: string[]
   /**
-   * The project's oxlint config. ESLint leaves the rules it turns on to oxlint, which runs first
-   * and is faster.
+   * The project's oxlint config file, JSON or JS/TS. ESLint leaves the rules it turns on to
+   * oxlint, which runs first and is faster.
    */
   oxlintConfig?: string
 }
@@ -32,10 +32,14 @@ const defaultIgnores = [
 ]
 
 /**
- * The ESLint config of a whatsaaaa project. The project's own config objects come after the
- * shared rules and before the oxlint and formatter ones, so oxlint and the formatter still win.
+ * The ESLint config of a whatsaaaa project, for the config file to export as it is: ESLint awaits
+ * it. The project's own config objects come after the shared rules and before the oxlint and
+ * formatter ones, so oxlint and the formatter still win.
  */
-function whatsaaaa(options: Options = {}, ...configs: Linter.Config[]): Linter.Config[] {
+async function whatsaaaa(
+  options: Options = {},
+  ...configs: Linter.Config[]
+): Promise<Linter.Config[]> {
   const { vue = false, react = false, ignores = [], oxlintConfig = '.oxlintrc.json' } = options
   return defineConfigWithVueTs(
     {
@@ -64,7 +68,7 @@ function whatsaaaa(options: Options = {}, ...configs: Linter.Config[]): Linter.C
 
     ...(configs as ConfigInput[]),
 
-    ...pluginOxlint.buildFromOxlintConfigFile(oxlintConfig),
+    ...(await pluginOxlint.buildFromConfigFile(oxlintConfig)),
     skipFormatting,
   ) as Linter.Config[]
 }

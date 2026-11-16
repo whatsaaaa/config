@@ -9,7 +9,7 @@ Shared TypeScript, lint and format configuration packages for whatsaaaa projects
 | [`@whatsaaaa/tsconfig`](./packages/tsconfig)           | TypeScript configs: `base.json`, `node.json` for code Node runs, `bundler.json` for code a bundler builds |
 | [`@whatsaaaa/oxlint-config`](./packages/oxlint-config) | oxlint configs: `base.json`, `vue.json`, `react.json`                                                     |
 | [`@whatsaaaa/eslint-config`](./packages/eslint-config) | The ESLint flat config: TypeScript, Vue and React, leaving to oxlint what it covers                       |
-| [`@whatsaaaa/format-config`](./packages/format-config) | The formatter options, for oxfmt and for Prettier where oxfmt does not reach (Astro files)                |
+| [`@whatsaaaa/format-config`](./packages/format-config) | The formatter options, for oxfmt                                                                          |
 
 They hold what design-system and ui-vue configured by hand before, rule for rule. The tests compare each package with those configs and list every difference with its reason.
 
@@ -52,7 +52,7 @@ Each package's README has the details. The projects in [`fixtures/`](./fixtures)
 
 ## Working on it
 
-You need Node.js (22.18 or later on 22, or 24.12 or later) and pnpm. `corepack enable` sets pnpm up. `pnpm install` builds the packages' `dist/`, which this repository's own configs and the fixtures use, the way a project uses the published packages.
+You need Node.js (22.18 or later on 22, or 24.12 or later) and [pnpm](https://pnpm.io/installation), which switches itself to the version `packageManager` names in `package.json`. `pnpm install` builds the packages' `dist/`, which this repository's own configs and the fixtures use, the way a project uses the published packages.
 
 | Command           | What it does                                                                                   |
 | ----------------- | ---------------------------------------------------------------------------------------------- |
@@ -74,8 +74,8 @@ CI runs on every pull request: formatting, lint (with publint and attw on each p
 - each tsconfig resolves to the options of the design-system and ui-vue configs it replaces, apart from the differences the test lists,
 - each oxlint config turns on the same rules, plugins and environments as design-system's and ui-vue's, and a project that extends it still knows the browser and Node globals,
 - the ESLint config turns on the same rules as design-system's and ui-vue's for TypeScript and Vue files, and every rule of hooks of form-builder's React block at the same severity, in ESLint or in oxlint,
-- the formatter options are those of design-system, ui-vue and form-builder-sample, and oxfmt and Prettier format a file the same way with them,
-- each fixture passes `tsc` (`vue-tsc` for Vue), oxlint, ESLint and oxfmt's check (and Prettier's, for the Astro one), and each tool reports what its config should catch.
+- the formatter options are those of design-system and ui-vue, and oxfmt formats a file with them as with design-system's config,
+- each fixture passes `tsc` (`vue-tsc` for Vue), oxlint, ESLint and oxfmt's check (Astro files included, for the Astro one), and each tool reports what its config should catch.
 
 ## Releasing
 

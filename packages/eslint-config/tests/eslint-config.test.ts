@@ -2,6 +2,9 @@
 // whatsaaaa/design-system at 9cf6b3c and whatsaaaa/ui-vue at 4d729c8 (each eslint.config.ts with
 // the .oxlintrc.json it reads), and the React block of whatsaaaa/form-builder at 1ad145c.
 import { execFileSync } from 'node:child_process'
+import { mkdtempSync, writeFileSync } from 'node:fs'
+import { tmpdir } from 'node:os'
+import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { ESLint, type Linter } from 'eslint'
 import { afterAll, describe, expect, test } from 'vitest'
@@ -52,7 +55,7 @@ describe.each(['design-system', 'ui-vue'])('whatsaaaa({ vue: true }) replacing %
 
   test.each(files)('turns on the same rules for %s', async (file) => {
     const reference = await referenceConfig(name, file)
-    const ours = await oursConfig(vue, file)
+    const ours = await oursConfig(await vue, file)
     expect(ours.rules).toEqual(reference.rules)
     expect(Object.keys(ours.plugins).sort()).toEqual(Object.keys(reference.plugins).sort())
     expect(ours.languageOptions.parser.meta).toEqual(reference.languageOptions.parser.meta)
@@ -63,7 +66,7 @@ describe('whatsaaaa() without a framework', () => {
   test.each(['design-system', 'ui-vue'])('turns on the rules of %s without Vue', async (name) => {
     const file = 'src/module.ts'
     const reference = await referenceConfig(name, file)
-    const ours = await oursConfig(whatsaaaa({ oxlintConfig: oxlintConfig('base') }), file)
+    const ours = await oursConfig(await whatsaaaa({ oxlintConfig: oxlintConfig('base') }), file)
     expect(withoutPlugin(ours.rules, 'vue')).toEqual(withoutPlugin(reference.rules, 'vue'))
     // eslint-config-prettier lists Vue's formatting rules, turned off
     const vueRulesOn = Object.entries(ours.rules as Record<string, [number]>).filter(
@@ -97,7 +100,7 @@ describe('whatsaaaa({ react: true }) replacing form-builder', () => {
       const referenceRules = (await reference.calculateConfigForFile(
         `frameworks/react/${file}`,
       )) as { rules: Record<string, [number, ...unknown[]]> }
-      const ours = (await oursConfig(react, file)) as { rules: Record<string, [number]> }
+      const ours = (await oursConfig(await react, file)) as { rules: Record<string, [number]> }
 
       const hooks = Object.entries(referenceRules.rules).filter(([rule]) =>
         rule.startsWith('react-hooks/'),
@@ -114,10 +117,10 @@ describe('whatsaaaa({ react: true }) replacing form-builder', () => {
 
   test('changes no other rule', async () => {
     const plain = await oursConfig(
-      whatsaaaa({ oxlintConfig: oxlintConfig('base') }),
+      await whatsaaaa({ oxlintConfig: oxlintConfig('base') }),
       'src/module.ts',
     )
-    const ours = await oursConfig(react, 'src/module.ts')
+    const ours = await oursConfig(await react, 'src/module.ts')
     const others = (rules: Rules) =>
       Object.fromEntries(
         Object.entries(rules).filter(
@@ -133,7 +136,10 @@ describe('options', () => {
     const eslint = new ESLint({
       cwd: path('./reference'),
       overrideConfigFile: true,
-      overrideConfig: whatsaaaa({ ignores: ['generated/**'], oxlintConfig: oxlintConfig('base') }),
+      overrideConfig: await whatsaaaa({
+        ignores: ['generated/**'],
+        oxlintConfig: oxlintConfig('base'),
+      }),
     })
     for (const file of [
       'dist/index.ts',
@@ -148,12 +154,27 @@ describe('options', () => {
     expect(await eslint.isPathIgnored('src/index.ts')).toBe(false)
   })
 
-  test("puts the project's configs before the oxlint and formatter ones", () => {
-    const config = whatsaaaa({ oxlintConfig: oxlintConfig('base') }, { name: 'project/own' })
+  test("puts the project's configs before the oxlint and formatter ones", async () => {
+    const config = await whatsaaaa({ oxlintConfig: oxlintConfig('base') }, { name: 'project/own' })
     const names = config.map((block) => block.name)
     const own = names.indexOf('project/own')
     expect(own).toBeGreaterThan(names.indexOf('whatsaaaa/files-to-lint'))
     expect(own).toBeLessThan(names.findIndex((name) => name?.startsWith('oxlint/')))
     expect(names.at(-1)).toBe('config-prettier')
+  })
+
+  test('leaves to oxlint what an oxlint config in TypeScript turns on', async () => {
+    const file = join(mkdtempSync(join(tmpdir(), 'oxlint-config-')), 'oxlint.config.ts')
+    writeFileSync(
+      file,
+      "export default { plugins: ['typescript'], rules: { 'typescript/no-explicit-any': 'error' } }\n",
+    )
+    const rule = '@typescript-eslint/no-explicit-any'
+    const plain = await oursConfig(
+      await whatsaaaa({ oxlintConfig: oxlintConfig('base') }),
+      'src/module.ts',
+    )
+    const ours = await oursConfig(await whatsaaaa({ oxlintConfig: file }), 'src/module.ts')
+    expect({ plain: plain.rules[rule], ours: ours.rules[rule] }).toEqual({ plain: [2], ours: [0] })
   })
 })

@@ -111,15 +111,11 @@ describe('react-app', () => {
 })
 
 describe('astro-site', () => {
-  test("passes Prettier's check, Astro files included", () => {
-    expect(run('astro-site', 'prettier', ['--check', '.'])).toMatchObject(passes)
-  })
-
-  test('Prettier formats Astro files with the shared options', () => {
+  test('oxfmt formats Astro files with the shared options', () => {
     const result = run(
       'astro-site',
-      'prettier',
-      ['--stdin-filepath', 'src/pages/bad.astro'],
+      'oxfmt',
+      ['--stdin-filepath=src/pages/bad.astro'],
       '---\nconst title = "whatsaaaa";\n---\n<h1>{title}</h1>\n',
     )
     expect(result).toEqual({

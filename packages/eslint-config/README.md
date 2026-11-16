@@ -26,12 +26,14 @@ export default whatsaaaa(
 )
 ```
 
-| Option         | Default            | What it does                                                                                                                  |
-| -------------- | ------------------ | ----------------------------------------------------------------------------------------------------------------------------- |
-| `vue`          | `false`            | Lints `.vue` files with eslint-plugin-vue's `flat/recommended`                                                                |
-| `react`        | `false`            | Checks the rules of hooks and the React Compiler's rules, with `react-hooks/exhaustive-deps` as an error                      |
-| `ignores`      | `[]`               | Paths to skip, on top of the default ones: `dist`, `coverage` and Playwright's reports                                        |
-| `oxlintConfig` | `'.oxlintrc.json'` | The oxlint config, from the working directory. ESLint turns off every rule it turns on, since oxlint runs first and is faster |
+| Option         | Default            | What it does                                                                                                                                                                            |
+| -------------- | ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `vue`          | `false`            | Lints `.vue` files with eslint-plugin-vue's `flat/recommended`                                                                                                                          |
+| `react`        | `false`            | Checks the rules of hooks and the React Compiler's rules, with `react-hooks/exhaustive-deps` as an error                                                                                |
+| `ignores`      | `[]`               | Paths to skip, on top of the default ones: `dist`, `coverage` and Playwright's reports                                                                                                  |
+| `oxlintConfig` | `'.oxlintrc.json'` | The oxlint config, from the working directory: a JSON one, or a JS or TS one such as `oxlint.config.ts`. ESLint turns off every rule it turns on, since oxlint runs first and is faster |
+
+`whatsaaaa()` returns a Promise, which the config file exports as it is: ESLint awaits it, as it has since ESLint 8.44, and the package needs ESLint 10.
 
 It lints `.ts`, `.mts`, `.cts`, `.tsx` and `.vue` files, and ESLint's own `.js`, `.mjs` and `.cjs`. The project's config objects come after the shared ones and before the oxlint and formatter ones, so they can change a shared rule and cannot turn on one oxlint or the formatter owns.
 
