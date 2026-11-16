@@ -34,14 +34,15 @@
     "lint:package": "publint --strict && pnpm pack --out .attw/package.tgz && attw .attw/package.tgz --profile esm-only"
   },
   "dependencies": {
-    "@tsconfig/node24": "^24.0.6"
+    "@tsconfig/node22": "^22.0.7"
   },
   "devDependencies": {
+    "@tsconfig/node24": "^24.0.6",
     "typescript": "~6.0.3"
   },
   "peerDependencies": {
     "@types/node": "*",
-    "typescript": ">=5.8.0"
+    "typescript": ">=6.0.0"
   },
   "peerDependenciesMeta": {
     "@types/node": {

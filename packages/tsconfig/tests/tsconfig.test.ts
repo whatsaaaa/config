@@ -14,19 +14,12 @@ describe('node.json', () => {
         resolveOptions('../node.json'),
       ),
     ).toEqual({
-      // design-system's modules also run in browsers as they are, so it holds them to ES2022 and
-      // adds the DOM to its own config. Code Node runs has what @tsconfig/node24 gives it.
-      target: { reference: 'es2022', ours: 'es2024' },
+      // design-system's modules also run in browsers as they are, so it adds the DOM to its own
+      // config. Code Node runs has what Node 22, the oldest Node the projects support, has: ES2024,
+      // the Set methods and iterator helpers of ES2025, and Array.fromAsync.
       lib: {
         reference: ['es2022', 'dom', 'dom.iterable'],
-        ours: [
-          'es2024',
-          'esnext.array',
-          'esnext.collection',
-          'esnext.error',
-          'es2025.iterator',
-          'es2025.promise',
-        ],
+        ours: ['es2024', 'es2025.collection', 'es2025.iterator', 'esnext.array'],
       },
       // new for every project: JSON modules can be imported
       resolveJsonModule: { ours: true },
