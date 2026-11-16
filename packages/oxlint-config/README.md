@@ -24,6 +24,8 @@ oxlint's `extends` takes paths, not package names, so a project's `.oxlintrc.jso
 }
 ```
 
+The configs are for a `.oxlintrc.json`. An `oxlint.config.ts` cannot extend them: its `extends` takes config objects, not paths, and these files are JSON with comments, which a JS import does not load.
+
 [`@whatsaaaa/eslint-config`](https://www.npmjs.com/package/@whatsaaaa/eslint-config) reads that file and leaves to oxlint every rule it turns on.
 
 oxlint does not pass a top-level `env` on through `extends`, so `base.json` sets the globals in an override for every file, which it does pass on.
