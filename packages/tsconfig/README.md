@@ -23,7 +23,7 @@ pnpm add -D @whatsaaaa/tsconfig typescript
 ```
 
 - `base.json` sets no `target` or `lib`. A project that extends it alone has TypeScript's defaults, or those of the config it extends with it.
-- `node.json` needs `@types/node` in the project, at the major of the oldest Node the project supports: `@types/node@22` for Node 22, so it knows only the Node APIs that Node 22 has.
+- `node.json` needs `@types/node` in the project, at the major of the oldest Node the project supports: `@types/node@22` for Node 22, so it rejects the Node APIs of later majors. It does not catch those that came in a later minor release of that major: on Node 22.18, it still takes Node 22.19's `process.threadCpuUsage`.
 - `node.json` holds code to Node 22, the oldest Node whatsaaaa projects support: it rejects what Node 22 does not have, such as `Promise.try`. It sets its own `lib` because `@tsconfig/node22`'s, under TypeScript 6, takes in some of what Node 22 lacks. That `lib` names parts of ES2025, so the package needs TypeScript 6 or later.
 - `bundler.json` brings no types of its own. A project adds the ones its code runs with, such as `"types": ["vite/client"]`.
 - `erasableSyntaxOnly` rejects enums, namespaces and parameter properties, which Node's type stripping cannot run.
