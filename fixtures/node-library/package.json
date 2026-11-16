@@ -4,7 +4,7 @@
   "description": "A library Node runs as it is: @whatsaaaa/tsconfig/node.json and the base oxlint and ESLint configs",
   "type": "module",
   "devDependencies": {
-    "@types/node": "^24.19.2",
+    "@types/node": "^22.20.5",
     "@whatsaaaa/eslint-config": "workspace:*",
     "@whatsaaaa/format-config": "workspace:*",
     "@whatsaaaa/oxlint-config": "workspace:*",

@@ -3,6 +3,7 @@
   "display": "whatsaaaa node",
   "extends": ["@tsconfig/node22/tsconfig.json", "./base.json"],
   "compilerOptions": {
+    "target": "es2024",
     "lib": ["es2024", "es2025.collection", "es2025.iterator", "esnext.array"],
     "types": ["node"],
     "rewriteRelativeImportExtensions": true
