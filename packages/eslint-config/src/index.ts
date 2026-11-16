@@ -13,7 +13,7 @@ export interface Options {
   vue?: boolean
   /** Checks the rules of hooks and the React Compiler's rules. */
   react?: boolean
-  /** Paths ESLint skips, on top of {@link defaultIgnores}. */
+  /** Paths ESLint skips, on top of the default ones. */
   ignores?: string[]
   /**
    * The project's oxlint config. ESLint leaves the rules it turns on to oxlint, which runs first
@@ -23,7 +23,7 @@ export interface Options {
 }
 
 /** What no project lints: build output, coverage and Playwright's reports. */
-export const defaultIgnores = [
+const defaultIgnores = [
   '**/dist/**',
   '**/coverage/**',
   'playwright-report/**',
@@ -35,7 +35,7 @@ export const defaultIgnores = [
  * The ESLint config of a whatsaaaa project. The project's own config objects come after the
  * shared rules and before the oxlint and formatter ones, so oxlint and the formatter still win.
  */
-export function whatsaaaa(options: Options = {}, ...configs: Linter.Config[]): Linter.Config[] {
+function whatsaaaa(options: Options = {}, ...configs: Linter.Config[]): Linter.Config[] {
   const { vue = false, react = false, ignores = [], oxlintConfig = '.oxlintrc.json' } = options
   return defineConfigWithVueTs(
     {
