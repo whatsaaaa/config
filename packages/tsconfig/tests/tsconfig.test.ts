@@ -14,8 +14,20 @@ describe('node.json', () => {
         resolveOptions('../node.json'),
       ),
     ).toEqual({
-      // design-system's modules also run in browsers, so it adds the DOM to its own config
-      lib: { reference: ['es2022', 'dom', 'dom.iterable'], ours: ['es2022'] },
+      // design-system's modules also run in browsers as they are, so it holds them to ES2022 and
+      // adds the DOM to its own config. Code Node runs has what @tsconfig/node24 gives it.
+      target: { reference: 'es2022', ours: 'es2024' },
+      lib: {
+        reference: ['es2022', 'dom', 'dom.iterable'],
+        ours: [
+          'es2024',
+          'esnext.array',
+          'esnext.collection',
+          'esnext.error',
+          'es2025.iterator',
+          'es2025.promise',
+        ],
+      },
       // new for every project: JSON modules can be imported
       resolveJsonModule: { ours: true },
     })
@@ -58,7 +70,6 @@ describe('base.json', () => {
     for (const flavour of ['../node.json', '../bundler.json']) {
       const options = resolveOptions(flavour)
       for (const [key, value] of Object.entries(base)) {
-        if (key === 'lib') continue // bundler.json adds the DOM
         expect({ [key]: options[key] }).toEqual({ [key]: value })
       }
     }
@@ -66,8 +77,6 @@ describe('base.json', () => {
 
   test('holds the house rules', () => {
     expect(resolveOptions('../base.json')).toMatchObject({
-      target: 'es2022',
-      lib: ['es2022'],
       strict: true,
       noUncheckedIndexedAccess: true,
       verbatimModuleSyntax: true,

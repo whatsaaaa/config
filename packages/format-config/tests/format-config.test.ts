@@ -6,11 +6,27 @@ import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { describe, expect, test } from 'vitest'
 import oxfmtOptions from '../src/oxfmt.ts'
-import prettierDefault, { prettierConfig } from '../src/prettier.ts'
+import { prettierConfig } from '../src/prettier-config.ts'
 
 const path = (file: string) => fileURLToPath(new URL(file, import.meta.url))
 const readJson = (file: string): Record<string, unknown> =>
   JSON.parse(readFileSync(path(file), 'utf8'))
+
+const bin = (name: string) => path(`../node_modules/.bin/${name}`)
+const oxfmt = (source: string, file: string, config: string) =>
+  execFileSync(bin('oxfmt'), ['-c', config, `--stdin-filepath=${file}`], {
+    input: source,
+    encoding: 'utf8',
+  })
+const prettier = (source: string, file: string) =>
+  execFileSync(
+    bin('prettier'),
+    ['--config', path('./prettier.config.ts'), '--stdin-filepath', file],
+    {
+      input: source,
+      encoding: 'utf8',
+    },
+  )
 
 /** The formatting options of an .oxfmtrc.json: what is left without its schema and its ignores. */
 function formattingOptions(file: string) {
@@ -52,30 +68,14 @@ describe('./prettier', () => {
     })
   })
 
-  test('finds the Astro plugin when it is installed', () => {
-    expect(prettierDefault.plugins).toEqual([
-      fileURLToPath(import.meta.resolve('prettier-plugin-astro')),
-    ])
+  test('formats Astro files with the Astro plugin when it is installed', () => {
+    expect(prettier('---\nconst title = "whatsaaaa";\n---\n<h1>{title}</h1>\n', 'a.astro')).toBe(
+      "---\nconst title = 'whatsaaaa'\n---\n\n<h1>{title}</h1>\n",
+    )
   })
 })
 
 describe('oxfmt and Prettier', () => {
-  const bin = (name: string) => path(`../node_modules/.bin/${name}`)
-  const oxfmt = (source: string, file: string, config: string) =>
-    execFileSync(bin('oxfmt'), ['-c', config, `--stdin-filepath=${file}`], {
-      input: source,
-      encoding: 'utf8',
-    })
-  const prettier = (source: string, file: string) =>
-    execFileSync(
-      bin('prettier'),
-      ['--config', path('./prettier.config.ts'), '--stdin-filepath', file],
-      {
-        input: source,
-        encoding: 'utf8',
-      },
-    )
-
   // badly formatted on purpose: double quotes, semicolons, long and short lines
   const source = readFileSync(path('./unformatted.txt'), 'utf8')
 
