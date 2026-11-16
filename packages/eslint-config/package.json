@@ -1,0 +1,64 @@
+{
+  "name": "@whatsaaaa/eslint-config",
+  "version": "1.0.0",
+  "description": "Shared ESLint flat config for whatsaaaa projects: TypeScript, Vue and React, with oxlint and the formatter",
+  "keywords": [
+    "eslint",
+    "eslint-config",
+    "oxlint",
+    "react",
+    "vue"
+  ],
+  "homepage": "https://github.com/whatsaaaa/config/tree/main/packages/eslint-config#readme",
+  "bugs": "https://github.com/whatsaaaa/config/issues",
+  "license": "MIT",
+  "author": "Whatsaaaa",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/whatsaaaa/config.git",
+    "directory": "packages/eslint-config"
+  },
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "prepare": "tsc -p tsconfig.build.json",
+    "lint:package": "publint --strict && pnpm pack --out .attw/package.tgz && attw .attw/package.tgz --profile esm-only"
+  },
+  "dependencies": {
+    "@vue/eslint-config-typescript": "^14.9.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-oxlint": "^1.93.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-vue": "^10.12.1",
+    "vue-eslint-parser": "^10.4.2"
+  },
+  "devDependencies": {
+    "@whatsaaaa/oxlint-config": "workspace:*",
+    "@whatsaaaa/tsconfig": "workspace:*",
+    "eslint": "^10.14.0",
+    "jiti": "^2.7.0",
+    "oxlint": "^1.93.0",
+    "typescript": "~6.0.3"
+  },
+  "peerDependencies": {
+    "eslint": "^10.0.0",
+    "typescript": ">=5.8.0"
+  },
+  "engines": {
+    "node": "^22.18.0 || >=24.12.0"
+  }
+}

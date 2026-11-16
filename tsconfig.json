@@ -1,0 +1,5 @@
+// The packages' sources, the tests and the configs. Each fixture has its own.
+{
+  "extends": "@whatsaaaa/tsconfig/node.json",
+  "include": ["packages/*/src", "packages/*/tests", "tests", "*.config.ts"]
+}

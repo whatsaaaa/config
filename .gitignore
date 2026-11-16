@@ -1,0 +1,17 @@
+node_modules
+.DS_Store
+dist
+coverage
+*.local
+*.log
+*.tsbuildinfo
+*.tgz
+.eslintcache
+
+# Packed by lint:package for attw to check
+.attw
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea

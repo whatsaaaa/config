@@ -1,0 +1,10 @@
+{
+  "extends": ["./base.json"],
+  "plugins": ["react"],
+  "rules": {
+    // not in the correctness category, and the rule React projects need most
+    "react/rules-of-hooks": "error",
+    // a warning in eslint-plugin-react-hooks' recommended config, which this takes over
+    "react/incompatible-library": "warn"
+  }
+}

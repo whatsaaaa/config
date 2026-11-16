@@ -1,0 +1,50 @@
+{
+  "name": "@whatsaaaa/format-config",
+  "version": "1.0.0",
+  "description": "Shared oxfmt options for whatsaaaa projects",
+  "keywords": [
+    "format",
+    "oxfmt"
+  ],
+  "homepage": "https://github.com/whatsaaaa/config/tree/main/packages/format-config#readme",
+  "bugs": "https://github.com/whatsaaaa/config/issues",
+  "license": "MIT",
+  "author": "Whatsaaaa",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/whatsaaaa/config.git",
+    "directory": "packages/format-config"
+  },
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    "./oxfmt": {
+      "types": "./dist/oxfmt.d.ts",
+      "default": "./dist/oxfmt.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "prepare": "tsc -p tsconfig.build.json",
+    "lint:package": "publint --strict && pnpm pack --out .attw/package.tgz && attw .attw/package.tgz --profile esm-only"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.5",
+    "@whatsaaaa/tsconfig": "workspace:*",
+    "oxfmt": "^0.78.0",
+    "typescript": "~6.0.3"
+  },
+  "peerDependencies": {
+    "oxfmt": ">=0.73.0"
+  },
+  "engines": {
+    "node": "^22.18.0 || >=24.12.0"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "name": "fixture-astro-site",
+  "private": true,
+  "description": "A site with Astro files: @whatsaaaa/tsconfig/base.json and oxfmt formatting the Astro files too",
+  "type": "module",
+  "devDependencies": {
+    "@astrojs/compiler-rs": "^0.5.3",
+    "@whatsaaaa/eslint-config": "workspace:*",
+    "@whatsaaaa/format-config": "workspace:*",
+    "@whatsaaaa/oxlint-config": "workspace:*",
+    "@whatsaaaa/tsconfig": "workspace:*",
+    "eslint": "^10.14.0",
+    "jiti": "^2.7.0",
+    "oxfmt": "^0.78.0",
+    "oxlint": "^1.93.0",
+    "typescript": "~6.0.3"
+  }
+}
