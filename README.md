@@ -80,7 +80,7 @@ CI runs on every pull request: formatting, lint (with publint and attw on each p
 ## Releasing
 
 1. A pull request that changes what a package ships adds a changeset with `pnpm changeset`.
-2. When it merges, the release workflow, `.github/workflows/release.yml`, opens a Version Packages pull request that bumps the versions and writes the changelogs.
+2. When it merges, the release workflow, `.github/workflows/release.yml`, opens a Version Packages pull request that bumps the versions and writes the changelogs. It then starts CI on that pull request's branch, since GitHub starts no CI run for a pull request the workflow's own token opens, and the `main` ruleset requires CI to pass.
 3. Merging that one starts the publish job. It waits for a reviewer to approve the `npm` environment.
 4. Once approved, it publishes to npm through trusted publishing, with provenance. No npm token is stored anywhere.
 
