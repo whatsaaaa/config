@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: pnpm
+      # builds the packages' dist/, which the repository's own configs and the fixtures use
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm format:check
+      # ends with publint and attw on each package as it is packed
+      - run: pnpm lint
+      - name: Fail if lint auto-fixed anything
+        run: git diff --exit-code
+      - run: pnpm type-check
+      # the fixtures, and each config against the configs it replaces
+      - run: pnpm test

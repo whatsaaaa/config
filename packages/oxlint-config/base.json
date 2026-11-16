@@ -1,0 +1,17 @@
+{
+  "plugins": ["eslint", "typescript", "unicorn", "oxc"],
+  "categories": {
+    "correctness": "error"
+  },
+  // oxlint passes `overrides` on through `extends`, but not a top-level `env`, so the
+  // environments go in an override that matches every file.
+  "overrides": [
+    {
+      "files": ["**/*"],
+      "env": {
+        "browser": true,
+        "node": true
+      }
+    }
+  ]
+}

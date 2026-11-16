@@ -1,0 +1,43 @@
+{
+  "name": "@whatsaaaa/oxlint-config",
+  "version": "1.0.0",
+  "description": "Shared oxlint configs for whatsaaaa projects: base, vue and react",
+  "keywords": [
+    "lint",
+    "oxc",
+    "oxlint"
+  ],
+  "homepage": "https://github.com/whatsaaaa/config/tree/main/packages/oxlint-config#readme",
+  "bugs": "https://github.com/whatsaaaa/config/issues",
+  "license": "MIT",
+  "author": "Whatsaaaa",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/whatsaaaa/config.git",
+    "directory": "packages/oxlint-config"
+  },
+  "files": [
+    "base.json",
+    "vue.json",
+    "react.json"
+  ],
+  "type": "module",
+  "exports": {
+    "./base.json": "./base.json",
+    "./vue.json": "./vue.json",
+    "./react.json": "./react.json",
+    "./package.json": "./package.json"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "lint:package": "publint --strict && pnpm pack --out .attw/package.tgz && attw .attw/package.tgz --profile esm-only"
+  },
+  "devDependencies": {
+    "oxlint": "^1.93.0"
+  },
+  "peerDependencies": {
+    "oxlint": "^1.93.0"
+  }
+}

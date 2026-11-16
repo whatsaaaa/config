@@ -1,0 +1,4 @@
+{
+  "extends": "@whatsaaaa/tsconfig/bundler.json",
+  "include": ["src", "src/**/*.vue", "*.config.ts"]
+}

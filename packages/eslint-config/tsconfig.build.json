@@ -1,0 +1,11 @@
+// Compiles src/ to dist/, which the package publishes.
+{
+  "extends": "@whatsaaaa/tsconfig/node.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "declaration": true,
+    "rootDir": "src",
+    "outDir": "dist"
+  },
+  "include": ["src"]
+}

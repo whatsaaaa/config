@@ -1,0 +1,9 @@
+import {readFile} from "node:fs/promises";
+export interface Page { title: string; path: string; tags: string[]; draft?: boolean }
+export async function loadPages(directory: string, options: { includeDrafts: boolean; limit?: number } = { includeDrafts: false }): Promise<Page[]> {
+  const raw = await readFile(`${directory}/pages.json`, "utf8");
+  const pages = (JSON.parse(raw) as Page[]).filter(page => options.includeDrafts || !page.draft);
+  return pages.slice(0, options.limit ?? pages.length).map((page) => ({ ...page, tags: page.tags.map((tag) => tag.toLowerCase()) }));
+}
+export const titles = (pages: Page[]) => pages.map(p => p.title)
+  .join(", ")

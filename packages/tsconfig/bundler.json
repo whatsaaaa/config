@@ -1,0 +1,11 @@
+{
+  "$schema": "https://www.schemastore.org/tsconfig",
+  "display": "whatsaaaa bundler",
+  "extends": "./base.json",
+  "compilerOptions": {
+    "lib": ["es2022", "dom", "dom.iterable"],
+    "module": "preserve",
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true
+  }
+}

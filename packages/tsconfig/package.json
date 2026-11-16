@@ -1,0 +1,51 @@
+{
+  "name": "@whatsaaaa/tsconfig",
+  "version": "1.0.0",
+  "description": "Shared TypeScript configs for whatsaaaa projects: base, node and bundler",
+  "keywords": [
+    "tsconfig",
+    "typescript"
+  ],
+  "homepage": "https://github.com/whatsaaaa/config/tree/main/packages/tsconfig#readme",
+  "bugs": "https://github.com/whatsaaaa/config/issues",
+  "license": "MIT",
+  "author": "Whatsaaaa",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/whatsaaaa/config.git",
+    "directory": "packages/tsconfig"
+  },
+  "files": [
+    "base.json",
+    "node.json",
+    "bundler.json"
+  ],
+  "type": "module",
+  "exports": {
+    "./base.json": "./base.json",
+    "./node.json": "./node.json",
+    "./bundler.json": "./bundler.json",
+    "./package.json": "./package.json"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "lint:package": "publint --strict && pnpm pack --out .attw/package.tgz && attw .attw/package.tgz --profile esm-only"
+  },
+  "dependencies": {
+    "@tsconfig/node24": "^24.0.6"
+  },
+  "devDependencies": {
+    "typescript": "~6.0.3"
+  },
+  "peerDependencies": {
+    "@types/node": "*",
+    "typescript": ">=5.8.0"
+  },
+  "peerDependenciesMeta": {
+    "@types/node": {
+      "optional": true
+    }
+  }
+}

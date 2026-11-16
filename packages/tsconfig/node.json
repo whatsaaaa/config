@@ -1,0 +1,9 @@
+{
+  "$schema": "https://www.schemastore.org/tsconfig",
+  "display": "whatsaaaa node",
+  "extends": ["@tsconfig/node24/tsconfig.json", "./base.json"],
+  "compilerOptions": {
+    "types": ["node"],
+    "rewriteRelativeImportExtensions": true
+  }
+}

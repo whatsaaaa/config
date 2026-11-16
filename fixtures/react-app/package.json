@@ -1,0 +1,21 @@
+{
+  "name": "fixture-react-app",
+  "private": true,
+  "description": "A React app a bundler builds: @whatsaaaa/tsconfig/bundler.json and the React oxlint and ESLint configs",
+  "type": "module",
+  "dependencies": {
+    "react": "^19.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^19.3.0",
+    "@whatsaaaa/eslint-config": "workspace:*",
+    "@whatsaaaa/format-config": "workspace:*",
+    "@whatsaaaa/oxlint-config": "workspace:*",
+    "@whatsaaaa/tsconfig": "workspace:*",
+    "eslint": "^10.14.0",
+    "jiti": "^2.7.0",
+    "oxfmt": "^0.78.0",
+    "oxlint": "^1.93.0",
+    "typescript": "~6.0.3"
+  }
+}

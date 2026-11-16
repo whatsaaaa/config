@@ -1,0 +1,19 @@
+{
+  "name": "fixture-astro-site",
+  "private": true,
+  "description": "A site with Astro files: @whatsaaaa/tsconfig/base.json and Prettier with the Astro plugin, next to oxfmt",
+  "type": "module",
+  "devDependencies": {
+    "@whatsaaaa/eslint-config": "workspace:*",
+    "@whatsaaaa/format-config": "workspace:*",
+    "@whatsaaaa/oxlint-config": "workspace:*",
+    "@whatsaaaa/tsconfig": "workspace:*",
+    "eslint": "^10.14.0",
+    "jiti": "^2.7.0",
+    "oxfmt": "^0.78.0",
+    "oxlint": "^1.93.0",
+    "prettier": "^3.9.10",
+    "prettier-plugin-astro": "^1.1.2",
+    "typescript": "~6.0.3"
+  }
+}
